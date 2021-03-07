@@ -1,0 +1,21 @@
+{
+    "name": "mehmetbeyhz/ig-api",
+    "description": "Instagram unofficial api",
+    "autoload": {
+        "psr-4": {
+            "IgApi\\" : "src"
+        }
+    },
+    "require": {
+        "mehmetbeyhz/mclient": "dev-master",
+        "mehmetbeyhz/easy-json-mapper": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "mehmetbeyhz",
+            "email": "mehmetbeyhz@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}

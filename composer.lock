@@ -1,0 +1,106 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "8b455e6e225a0a7a0f41c3257af2a700",
+    "packages": [
+        {
+            "name": "mehmetbeyhz/easy-json-mapper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mehmetbeyHZ/EasyJsonMapper.git",
+                "reference": "4bbf0d7f93d557f44dcee2ac855ffc450f7b1cb1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mehmetbeyHZ/EasyJsonMapper/zipball/4bbf0d7f93d557f44dcee2ac855ffc450f7b1cb1",
+                "reference": "4bbf0d7f93d557f44dcee2ac855ffc450f7b1cb1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EJM\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "mehmetbeyhz",
+                    "email": "mehmetbeyhz@gmail.com"
+                }
+            ],
+            "description": "PHP Easy Json Mapper",
+            "support": {
+                "issues": "https://github.com/mehmetbeyHZ/EasyJsonMapper/issues",
+                "source": "https://github.com/mehmetbeyHZ/EasyJsonMapper/tree/master"
+            },
+            "time": "2020-06-03T19:00:45+00:00"
+        },
+        {
+            "name": "mehmetbeyhz/mclient",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mehmetbeyHZ/mClient.git",
+                "reference": "1b09c1cfce36a06d7527584f269d6c29f82f6aa1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mehmetbeyHZ/mClient/zipball/1b09c1cfce36a06d7527584f269d6c29f82f6aa1",
+                "reference": "1b09c1cfce36a06d7527584f269d6c29f82f6aa1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=7.4"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MClient\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "mehmetbeyhz",
+                    "email": "mehmetbeyhz@gmail.com"
+                }
+            ],
+            "description": "Php Curl Class",
+            "support": {
+                "issues": "https://github.com/mehmetbeyHZ/mClient/issues",
+                "source": "https://github.com/mehmetbeyHZ/mClient/tree/1.0"
+            },
+            "time": "2021-01-17T21:08:23+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "mehmetbeyhz/mclient": 20,
+        "mehmetbeyhz/easy-json-mapper": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
+}
