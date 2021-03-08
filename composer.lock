@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b455e6e225a0a7a0f41c3257af2a700",
+    "content-hash": "0285ded2a10dd73ac6054f475f191eae",
     "packages": [
         {
             "name": "mehmetbeyhz/easy-json-mapper",
@@ -53,12 +53,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mehmetbeyHZ/mClient.git",
-                "reference": "1b09c1cfce36a06d7527584f269d6c29f82f6aa1"
+                "reference": "970e4c941a16f0d4639136258940068bf1ad87a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mehmetbeyHZ/mClient/zipball/1b09c1cfce36a06d7527584f269d6c29f82f6aa1",
-                "reference": "1b09c1cfce36a06d7527584f269d6c29f82f6aa1",
+                "url": "https://api.github.com/repos/mehmetbeyHZ/mClient/zipball/970e4c941a16f0d4639136258940068bf1ad87a0",
+                "reference": "970e4c941a16f0d4639136258940068bf1ad87a0",
                 "shasum": ""
             },
             "require": {
@@ -86,9 +86,9 @@
             "description": "Php Curl Class",
             "support": {
                 "issues": "https://github.com/mehmetbeyHZ/mClient/issues",
-                "source": "https://github.com/mehmetbeyHZ/mClient/tree/1.0"
+                "source": "https://github.com/mehmetbeyHZ/mClient/tree/master"
             },
-            "time": "2021-01-17T21:08:23+00:00"
+            "time": "2021-03-08T00:31:10+00:00"
         }
     ],
     "packages-dev": [],
@@ -100,7 +100,9 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-json": "*"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
 }
