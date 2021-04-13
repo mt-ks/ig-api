@@ -52,9 +52,7 @@ class Settings
         return $this->userData[$key] ?? null;
     }
 
-    /**
-     * @throws JsonException
-     */
+
     public function save() : void
     {
         $this->saveFile();
@@ -77,12 +75,11 @@ class Settings
 
     /**
      * @param null $data
-     * @throws JsonException
      */
     protected function saveFile($data = null) : void
     {
         $fp = fopen($this->sessionFile,"wb");
-        fwrite($fp, json_encode($data ?? $this->userData, JSON_THROW_ON_ERROR));
+        fwrite($fp, json_encode($data ?? $this->userData));
         fclose($fp);
     }
 

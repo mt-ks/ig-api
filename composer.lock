@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0285ded2a10dd73ac6054f475f191eae",
+    "content-hash": "689ff3566536be0996626e2af449640e",
     "packages": [
         {
             "name": "mehmetbeyhz/easy-json-mapper",
@@ -53,12 +53,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mehmetbeyHZ/mClient.git",
-                "reference": "970e4c941a16f0d4639136258940068bf1ad87a0"
+                "reference": "91f66d19bbc8b02243364f8c831da2c24f210f77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mehmetbeyHZ/mClient/zipball/970e4c941a16f0d4639136258940068bf1ad87a0",
-                "reference": "970e4c941a16f0d4639136258940068bf1ad87a0",
+                "url": "https://api.github.com/repos/mehmetbeyHZ/mClient/zipball/91f66d19bbc8b02243364f8c831da2c24f210f77",
+                "reference": "91f66d19bbc8b02243364f8c831da2c24f210f77",
                 "shasum": ""
             },
             "require": {
@@ -88,7 +88,7 @@
                 "issues": "https://github.com/mehmetbeyHZ/mClient/issues",
                 "source": "https://github.com/mehmetbeyHZ/mClient/tree/master"
             },
-            "time": "2021-03-08T00:31:10+00:00"
+            "time": "2021-04-13T14:14:53+00:00"
         }
     ],
     "packages-dev": [],
@@ -101,7 +101,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-openssl": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"

@@ -1,25 +1,45 @@
 <?php
 namespace IgApi;
+use IgApi\Exceptions\InstagramRequestException;
+use MClient\HttpInterface;
 use MClient\Request as MRequest;
 
 
-class Request {
+class Request extends MRequest{
 
     protected string $addressPrefix = "i";
     protected string $address = "instagram.com";
     protected string $version = "v1";
+    protected string $fullAddress = "";
     protected Instagram $ig;
-    public function __construct(Instagram $ig)
+    protected HttpInterface $execute;
+
+    public function __construct($endpoint,Instagram $ig)
     {
+        $this->fullAddress = $this->getAddress().$endpoint;
+        parent::__construct($this->fullAddress);
         $this->ig = $ig;
+        $this->prepareRequest();
     }
 
     /**
      * @param $prefix
+     * @return $this
      */
-    public function setPrefix($prefix) : void
+    public function setPrefix($prefix) : Request
     {
         $this->addressPrefix = $prefix;
+        return $this;
+    }
+
+    /**
+     * @param $version
+     * @return $this
+     */
+    public function setVersion($version) : Request
+    {
+        $this->version = $version;
+        return $this;
     }
 
 
@@ -32,13 +52,11 @@ class Request {
     }
 
     /**
-     * @param $endpoint
      * @return MRequest
      */
-    public function request($endpoint) : MRequest
+    public function prepareRequest() : MRequest
     {
-        $request = new MRequest($this->getAddress().$endpoint);
-        $request->addHeader('Accept-Language','tr-TR, en-US')
+        $this->addHeader('Accept-Language','tr-TR, en-US')
             ->setUserAgent($this->ig->settings->info->getUseragent())
             ->setCookieString($this->ig->settings->info->getCookie())
             ->addHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8')
@@ -50,7 +68,44 @@ class Request {
             ->addHeader('X-DEVICE-ID',$this->ig->settings->info->getDeviceId())
             ->setIsIgPost(true);
 
-        return $request;
+        if ($this->ig->proxy):
+            $this->setProxy($this->ig->proxy);
+        endif;
+
+        return $this;
     }
+
+
+    /**
+     * @return \MClient\HttpInterface
+     * @throws \IgApi\Exceptions\InstagramRequestException
+     */
+    public function execute(): HttpInterface
+    {
+        $this->execute = parent::execute();
+        $this->debugHandler();
+        if ($this->execute->hasCurlError() || !strpos($this->execute->getHeaderLine('http_code'),"200"))
+        {
+            throw new InstagramRequestException($this->execute);
+        }
+        $this->ig->saveCookie($this->execute);
+
+
+        return $this->execute;
+    }
+
+    private function debugHandler() : void
+    {
+        if ($this->ig->isDebug()){
+            $requestType = $this->hasPosts() ? "POST" : "GET";
+            echo $requestType.": ".$this->getRequestUri()."\n";
+            if ($this->hasPosts()):
+                echo "DATA:" . $this->getRequestPosts()."\n\n";
+            endif;
+            echo "RESPONSE:" . $this->execute->getResponse();
+            echo "\n\n";
+        }
+    }
+
 
 }

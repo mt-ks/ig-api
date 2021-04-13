@@ -3,6 +3,7 @@
 
 namespace IgApi;
 use IgApi\Model\LoginResponse;
+use IgApi\Request\Story;
 use IgApi\Storage\Settings;
 use IgApi\Utils\Encryption;
 use JsonException;
@@ -10,10 +11,16 @@ use MClient\HttpInterface;
 
 class Instagram
 {
-    protected Request $request;
     public string $username;
     public string $password;
     public Settings $settings;
+    protected bool $debug = false;
+    public ?string $proxy = null;
+
+    /**
+     * @var \IgApi\Request\Story
+     */
+    public Story $story;
 
     /**
      * Instagram constructor.
@@ -24,9 +31,25 @@ class Instagram
      */
     public function __construct($username,$password,$settings = [])
     {
-        $this->request  = new Request($this);
         $this->setAccount($username,$password);
         $this->settings = new Settings($this,$settings);
+        $this->story = new Story($this);
+    }
+
+    /**
+     * @param $debug
+     */
+    public function enableDebug($debug) : void
+    {
+        $this->debug = $debug;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDebug() : bool
+    {
+        return $this->debug;
     }
 
     /**
@@ -40,11 +63,20 @@ class Instagram
     }
 
     /**
-     * @throws JsonException
+     * @param $proxy
      */
-    public function qeSync()
+    public function setProxy($proxy) : void
     {
-        $request = $this->request->request('qe/sync/')
+        $this->proxy = $proxy;
+    }
+
+
+    /**
+     * @throws \IgApi\Exceptions\InstagramRequestException
+     */
+    public function qeSync() : void
+    {
+        $request = $this->request('qe/sync/')
             ->addPost('_csrftoken',$this->settings->info->getToken())
             ->addPost('id',$this->settings->info->getDeviceId())
             ->addPost('server_config_retrieval',1)
@@ -58,13 +90,14 @@ class Instagram
 
 
     /**
-     * @throws JsonException
+     * @return \IgApi\Model\LoginResponse
+     * @throws \IgApi\Exceptions\InstagramRequestException
      */
-    public function login()
+    public function login() : LoginResponse
     {
         $this->zrToken();
         $this->qeSync();
-        $request = $this->request->request('accounts/login/')
+        $request = $this->request('accounts/login/')
             ->addPost('jazoest',Encryption::generateJazoest($this->settings->info->getPhoneId()))
             ->addPost('country_codes','[{"country_code":"1","source":["default"]}]')
             ->addPost('phone_id',$this->settings->info->getPhoneId())
@@ -77,22 +110,20 @@ class Instagram
             ->addPost('google_tokens','[]')
             ->addPost('login_attempt_count',0)
             ->execute();
-        if (strpos($request->getHeaderLine('http_code'),"200"))
-        {
-            $this->saveCookie($request);
-        }
+
         $loginResponse = new LoginResponse($request->getDecodedResponse(true));
         $this->settings->set('user_id',$loginResponse->getLoggedInUser()->getPk())->save();
         return $loginResponse;
     }
 
+
     /**
-     * @return array|mixed|null
-     * @throws JsonException
+     * @return string
+     * @throws \IgApi\Exceptions\InstagramRequestException
      */
-    public function zrToken()
+    public function zrToken() : string
     {
-        $request = $this->request->request('zr/token/result/')
+        $request = $this->request('zr/token/result/')
             ->addParam('device_id',$this->settings->info->getDeviceId())
             ->addParam('token_hash','')
             ->addParam('custom_device_id',$this->settings->info->getDeviceId())
@@ -105,12 +136,21 @@ class Instagram
     }
 
 
-    public function saveCookie(HttpInterface $request)
+    /**
+     * @param \MClient\HttpInterface $request
+     */
+    public function saveCookie(HttpInterface $request) : void
     {
         $this->settings
             ->set('token',$request->getCookies('csrftoken'))
             ->set('cookie',$request->getCookies())
             ->save();
+    }
+
+
+    public function request($endpoint) : Request
+    {
+        return (new Request($endpoint,$this));
     }
 
 }
