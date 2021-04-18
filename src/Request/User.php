@@ -7,6 +7,7 @@ namespace IgApi\Request;
 use EJM\MainMapper;
 use IgApi\Instagram;
 use IgApi\Model\FollowListResponse;
+use IgApi\Model\UserInfoResponse;
 use IgApi\Utils\Encryption;
 
 class User
@@ -17,6 +18,20 @@ class User
         $this->ig = $ig;
     }
 
+    /**
+     * @param $userId
+     * @return \IgApi\Model\UserInfoResponse
+     * @throws \IgApi\Exceptions\InstagramRequestException
+     */
+    public function getUserInfo($userId)
+    {
+        $request = $this->ig->request("users/{$userId}/info/")
+            ->addParam('from_module','blended_search')
+            ->execute()
+            ->getDecodedResponse();
+
+        return new UserInfoResponse($request);
+    }
 
     /**
      * @param $userId
