@@ -4,7 +4,6 @@
 namespace IgApi\Request;
 
 
-use EJM\MainMapper;
 use IgApi\Instagram;
 use IgApi\Model\FollowListResponse;
 use IgApi\Model\UserInfoResponse;
