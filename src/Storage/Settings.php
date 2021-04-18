@@ -96,6 +96,12 @@ class Settings
         }
     }
 
+    public function hasInstaId(): bool
+    {
+        $userId = $this->info->getUserId();
+        return $userId !== null && $userId !== "";
+    }
+
     /**
      * @return array
      */

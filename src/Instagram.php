@@ -4,6 +4,8 @@
 namespace IgApi;
 use IgApi\Model\LoginResponse;
 use IgApi\Request\Story;
+use IgApi\Request\Timeline;
+use IgApi\Request\User;
 use IgApi\Storage\Settings;
 use IgApi\Utils\Encryption;
 use JsonException;
@@ -23,6 +25,17 @@ class Instagram
     public Story $story;
 
     /**
+     * @var \IgApi\Request\User
+     */
+    public User $user;
+
+    /**
+     * @var \IgApi\Request\Timeline
+     */
+    public Timeline $timeline;
+
+
+    /**
      * Instagram constructor.
      * @param $username
      * @param $password
@@ -34,6 +47,8 @@ class Instagram
         $this->setAccount($username,$password);
         $this->settings = new Settings($this,$settings);
         $this->story = new Story($this);
+        $this->user  = new User($this);
+        $this->timeline = new Timeline($this);
     }
 
     /**

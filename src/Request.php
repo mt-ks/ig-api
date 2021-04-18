@@ -1,6 +1,7 @@
 <?php
 namespace IgApi;
 use IgApi\Exceptions\InstagramRequestException;
+use IgApi\Utils\CookieManager;
 use MClient\HttpInterface;
 use MClient\Request as MRequest;
 
@@ -88,11 +89,15 @@ class Request extends MRequest{
         {
             throw new InstagramRequestException($this->execute);
         }
-        $this->ig->saveCookie($this->execute);
 
+        $cookieManager = new CookieManager();
+        $this->ig->settings->set('cookie',$cookieManager->cookieMerge($this->ig->settings->info->getCookie(),$this->execute->getCookies()))
+        ->set('token',$cookieManager->token)
+        ->save();
 
         return $this->execute;
     }
+
 
     private function debugHandler() : void
     {
@@ -102,7 +107,8 @@ class Request extends MRequest{
             if ($this->hasPosts()):
                 echo "DATA:" . $this->getRequestPosts()."\n\n";
             endif;
-            echo "RESPONSE:" . $this->execute->getResponse();
+            echo "RESPONSE:" . $this->execute->getResponse()."\n";
+            echo "USER COOKIE DATA:" . $this->ig->settings->info->asJson();
             echo "\n\n";
         }
     }

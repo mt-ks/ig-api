@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mehmetbeyHZ/EasyJsonMapper.git",
-                "reference": "4bbf0d7f93d557f44dcee2ac855ffc450f7b1cb1"
+                "reference": "04d4b037584453b4885707d53ea6ed5cbdaecc16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mehmetbeyHZ/EasyJsonMapper/zipball/4bbf0d7f93d557f44dcee2ac855ffc450f7b1cb1",
-                "reference": "4bbf0d7f93d557f44dcee2ac855ffc450f7b1cb1",
+                "url": "https://api.github.com/repos/mehmetbeyHZ/EasyJsonMapper/zipball/04d4b037584453b4885707d53ea6ed5cbdaecc16",
+                "reference": "04d4b037584453b4885707d53ea6ed5cbdaecc16",
                 "shasum": ""
             },
             "require": {
@@ -45,7 +45,7 @@
                 "issues": "https://github.com/mehmetbeyHZ/EasyJsonMapper/issues",
                 "source": "https://github.com/mehmetbeyHZ/EasyJsonMapper/tree/master"
             },
-            "time": "2020-06-03T19:00:45+00:00"
+            "time": "2021-04-18T18:52:09+00:00"
         },
         {
             "name": "mehmetbeyhz/mclient",
