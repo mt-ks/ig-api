@@ -28,9 +28,10 @@ class Story
         return new HighlightsTray($request->getDecodedResponse());
     }
 
+
     /**
      * @param $userId
-     * @return mixed
+     * @return \IgApi\Model\StoryFeedResponse
      * @throws \IgApi\Exceptions\InstagramRequestException
      */
     public function getStory($userId)

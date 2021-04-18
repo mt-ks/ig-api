@@ -91,9 +91,11 @@ class Request extends MRequest{
         }
 
         $cookieManager = new CookieManager();
-        $this->ig->settings->set('cookie',$cookieManager->cookieMerge($this->ig->settings->info->getCookie(),$this->execute->getCookies()))
-        ->set('token',$cookieManager->token)
-        ->save();
+        $settings = $this->ig->settings->set('cookie',$cookieManager->cookieMerge($this->ig->settings->info->getCookie(),$this->execute->getCookies()));
+        if ($cookieManager->token !== null):
+            $settings->set('token',$cookieManager->token);
+        endif;
+        $settings->save();
 
         return $this->execute;
     }
