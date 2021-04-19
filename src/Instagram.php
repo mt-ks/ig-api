@@ -45,7 +45,6 @@ class Instagram
      * @param $username
      * @param $password
      * @param array $settings
-     * @throws JsonException
      */
     public function __construct($username,$password,$settings = [])
     {

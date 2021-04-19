@@ -21,7 +21,6 @@ class Settings
      * Settings constructor.
      * @param Instagram $ig
      * @param array $settings
-     * @throws JsonException
      */
     public function __construct(Instagram $ig,$settings = [])
     {
@@ -60,9 +59,7 @@ class Settings
 
 
 
-    /**
-     * @throws JsonException
-     */
+
     protected function checkUserStorage() : void
     {
         if (!file_exists($this->sessionFile))
