@@ -3,6 +3,7 @@
 
 namespace IgApi;
 use IgApi\Model\LoginResponse;
+use IgApi\Request\Account;
 use IgApi\Request\Story;
 use IgApi\Request\Timeline;
 use IgApi\Request\User;
@@ -34,6 +35,10 @@ class Instagram
      */
     public Timeline $timeline;
 
+    /**
+     * @var \IgApi\Request\Account
+     */
+    public Account $account;
 
     /**
      * Instagram constructor.
@@ -49,6 +54,7 @@ class Instagram
         $this->story = new Story($this);
         $this->user  = new User($this);
         $this->timeline = new Timeline($this);
+        $this->account = new Account($this);
     }
 
     /**

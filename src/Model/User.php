@@ -22,10 +22,13 @@ use EJM\MainMapper;
  * @method getExternalUrl()
  * @method getTotalIgtvVideos()
  * @method HdProfilePicVersions[] getHdProfilePicVersions()
+ * @method getPhoneNumber()
+ * @method getGender()
+ * @method getEmail()
  */
 
 class User extends MainMapper {
-    const MAP =
+    public const MAP =
         [
             'pk' => 'string',
             'username' => 'string',
@@ -42,5 +45,8 @@ class User extends MainMapper {
             'external_url' => 'string',
             'total_igtv_videos' => 'int',
             'hd_profile_pic_versions' => HdProfilePicVersions::class.'[]',
+            'phone_number' => 'string',
+            'gender' => 'int',
+            'email' => 'string',
         ];
 }

@@ -3,9 +3,6 @@
 
 namespace IgApi\Utils;
 
-
-use MClient\HttpCookies;
-
 class CookieManager
 {
     public ?string $token = null;
@@ -33,7 +30,7 @@ class CookieManager
         return $cookie;
     }
 
-    protected function stringToArray(string $cookie) : array
+    public function stringToArray(string $cookie) : array
     {
         $cookieArray = [];
         $parseLine = explode(";",$cookie);
@@ -49,5 +46,13 @@ class CookieManager
             endif;
         }
         return $cookieArray;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getToken(): ?string
+    {
+        return $this->token;
     }
 }
