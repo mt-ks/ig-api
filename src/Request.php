@@ -67,6 +67,7 @@ class Request extends MRequest{
             ->addHeader('X-IG-Android-ID',$this->ig->settings->info->getAndroidId())
             ->addHeader('X-IG-Device-ID',$this->ig->settings->info->getDeviceId())
             ->addHeader('X-DEVICE-ID',$this->ig->settings->info->getDeviceId())
+            ->addCurlOptions(CURLOPT_SUPPRESS_CONNECT_HEADERS,true)
             ->setIsIgPost(true);
 
         if ($this->ig->proxy):

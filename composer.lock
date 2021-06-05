@@ -53,12 +53,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mehmetbeyHZ/mClient.git",
-                "reference": "91f66d19bbc8b02243364f8c831da2c24f210f77"
+                "reference": "4bb5ed88a46b6336a750212edbd9df41dc0c29d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mehmetbeyHZ/mClient/zipball/91f66d19bbc8b02243364f8c831da2c24f210f77",
-                "reference": "91f66d19bbc8b02243364f8c831da2c24f210f77",
+                "url": "https://api.github.com/repos/mehmetbeyHZ/mClient/zipball/4bb5ed88a46b6336a750212edbd9df41dc0c29d7",
+                "reference": "4bb5ed88a46b6336a750212edbd9df41dc0c29d7",
                 "shasum": ""
             },
             "require": {
@@ -88,7 +88,7 @@
                 "issues": "https://github.com/mehmetbeyHZ/mClient/issues",
                 "source": "https://github.com/mehmetbeyHZ/mClient/tree/master"
             },
-            "time": "2021-04-13T14:14:53+00:00"
+            "time": "2021-06-05T10:13:54+00:00"
         }
     ],
     "packages-dev": [],

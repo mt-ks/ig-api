@@ -105,6 +105,8 @@ class Instagram
 
         $pubKeyId = $request->getHeaderLine('ig-set-password-encryption-key-id');
         $pubKey   = $request->getHeaderLine('ig-set-password-encryption-pub-key');
+
+
         $this->settings->set('public_key',$pubKey)->set('public_key_id',$pubKeyId)->save();
     }
 
@@ -130,6 +132,8 @@ class Instagram
             ->addPost('google_tokens','[]')
             ->addPost('login_attempt_count',0)
             ->execute();
+
+
 
         $loginResponse = new LoginResponse($request->getDecodedResponse(true));
         $this->settings->set('user_id',$loginResponse->getLoggedInUser()->getPk())->save();
