@@ -2,6 +2,7 @@
 
 
 namespace IgApi;
+use IgApi\Exceptions\InstagramRequestException;
 use IgApi\Model\ChallengeDetailModel;
 use IgApi\Model\LoginResponse;
 use IgApi\Request\Account;
@@ -105,6 +106,14 @@ class Instagram
 
         $pubKeyId = $request->getHeaderLine('ig-set-password-encryption-key-id');
         $pubKey   = $request->getHeaderLine('ig-set-password-encryption-pub-key');
+
+        if (empty($pubKeyId) || $pubKeyId === ""){
+            throw new InstagramRequestException($request,"Public Id Missing");
+        }
+
+        if (empty($pubKey) || $pubKey === ""){
+            throw new InstagramRequestException($request,"Public Id Missing");
+        }
 
 
         $this->settings->set('public_key',$pubKey)->set('public_key_id',$pubKeyId)->save();

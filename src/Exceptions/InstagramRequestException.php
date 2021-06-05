@@ -14,18 +14,22 @@ class InstagramRequestException extends \Exception
     protected HttpInterface $execute;
     public function __construct(HttpInterface $execute,$message = "", $code = 0, Throwable $previous = null)
     {
+
         $this->execute = $execute;
 
-        if (!$this->hasResponse())
+        if ($message === "")
         {
-            $message = "Empty response!";
-        }else{
-            $message = $this->getResponseMessage();
-        }
+            if (!$this->hasResponse())
+            {
+                $message = "Empty response!";
+            }else{
+                $message = $this->getResponseMessage();
+            }
 
-        if ($execute->hasCurlError())
-        {
-            $message = $execute->getCurlError();
+            if ($execute->hasCurlError())
+            {
+                $message = $execute->getCurlError();
+            }
         }
 
         parent::__construct($message, $code, $previous);
