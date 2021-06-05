@@ -14,6 +14,7 @@ class Request extends MRequest{
     protected string $fullAddress = "";
     protected Instagram $ig;
     protected HttpInterface $execute;
+    protected bool $isDisabledCookies = false;
 
     public function __construct($endpoint,Instagram $ig)
     {
@@ -43,6 +44,16 @@ class Request extends MRequest{
         return $this;
     }
 
+    /**
+     * @param $bool
+     * @return $this
+     */
+    public function setDisableCookies($bool) : Request
+    {
+        $this->isDisabledCookies = $bool;
+        return $this;
+    }
+
 
     /**
      * @return string
@@ -59,7 +70,6 @@ class Request extends MRequest{
     {
         $this->addHeader('Accept-Language','tr-TR, en-US')
             ->setUserAgent($this->ig->settings->info->getUseragent())
-            ->setCookieString($this->ig->settings->info->getCookie())
             ->addHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8')
             ->addHeader('X-IG-App-ID','567067343352427')
             ->addHeader('X-IG-Capabilities','3brTvx8=')
@@ -69,6 +79,11 @@ class Request extends MRequest{
             ->addHeader('X-DEVICE-ID',$this->ig->settings->info->getDeviceId())
             ->addCurlOptions(CURLOPT_SUPPRESS_CONNECT_HEADERS,true)
             ->setIsIgPost(true);
+
+        if (!$this->isDisabledCookies)
+        {
+            $this->setCookieString($this->ig->settings->info->getCookie());
+        }
 
         if ($this->ig->proxy):
             $this->setProxy($this->ig->proxy);
@@ -91,12 +106,14 @@ class Request extends MRequest{
             throw new InstagramRequestException($this->execute);
         }
 
-        $cookieManager = new CookieManager();
-        $settings = $this->ig->settings->set('cookie',$cookieManager->cookieMerge($this->ig->settings->info->getCookie(),$this->execute->getCookies()));
-        if ($cookieManager->token !== null):
-            $settings->set('token',$cookieManager->token);
-        endif;
-        $settings->save();
+        if (!$this->isDisabledCookies){
+            $cookieManager = new CookieManager();
+            $settings = $this->ig->settings->set('cookie',$cookieManager->cookieMerge($this->ig->settings->info->getCookie(),$this->execute->getCookies()));
+            if ($cookieManager->token !== null):
+                $settings->set('token',$cookieManager->token);
+            endif;
+            $settings->save();
+        }
 
         return $this->execute;
     }

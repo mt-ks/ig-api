@@ -2,6 +2,7 @@
 
 
 namespace IgApi;
+use IgApi\Model\ChallengeDetailModel;
 use IgApi\Model\LoginResponse;
 use IgApi\Request\Account;
 use IgApi\Request\Story;
@@ -9,7 +10,6 @@ use IgApi\Request\Timeline;
 use IgApi\Request\User;
 use IgApi\Storage\Settings;
 use IgApi\Utils\Encryption;
-use JsonException;
 use MClient\HttpInterface;
 
 class Instagram
@@ -46,7 +46,7 @@ class Instagram
      * @param $password
      * @param array $settings
      */
-    public function __construct($username,$password,$settings = [])
+    public function __construct($username, $password, array $settings = [])
     {
         $this->setAccount($username,$password);
         $this->settings = new Settings($this,$settings);
@@ -138,6 +138,84 @@ class Instagram
         $loginResponse = new LoginResponse($request->getDecodedResponse(true));
         $this->settings->set('user_id',$loginResponse->getLoggedInUser()->getPk())->save();
         return $loginResponse;
+    }
+
+    /**
+     * @param $challengePath
+     * @return mixed
+     * @throws \IgApi\Exceptions\InstagramRequestException
+     */
+    public function getChallengeDetail($challengePath)
+    {
+        $response = $this->request($challengePath)
+            ->addParam('gui',$this->settings->info->getUuid())
+            ->addParam('device_id',$this->settings->info->getDeviceId())
+            ->execute()
+            ->getDecodedResponse();
+
+        return new ChallengeDetailModel($response);
+    }
+
+    /**
+     * @param $path
+     * @param $choice : 0 : phone_number, 1 : email
+     * @return mixed
+     * @throws \IgApi\Exceptions\InstagramRequestException
+     * [step_name, step_data[form_type=phone_number]...]
+     */
+    public function sendChallengeCode($path,$choice)
+    {
+        return $this->request($path)
+            ->addPost('_csrftoken',$this->settings->info->getToken())
+            ->addPost('choice',$choice)
+            ->addPost('guid',$this->settings->info->getUuid())
+            ->addPost('device_id',$this->settings->info->getDeviceId())
+            ->execute()
+            ->getDecodedResponse(true);
+    }
+
+    /**
+     * @param $path
+     * @param $securityCode
+     * @return \IgApi\Model\LoginResponse
+     * @throws \IgApi\Exceptions\InstagramRequestException
+     */
+    public function confirmChallengeCode($path,$securityCode): LoginResponse
+    {
+        $response = $this->request($path)
+            ->addPost('security_code',$securityCode)
+            ->addPost('_csrftoken',$this->settings->info->getToken())
+            ->addPost('guid',$this->settings->info->getUuid())
+            ->addPost('device_id',$this->settings->info->getDeviceId())
+            ->execute()
+            ->getDecodedResponse(true);
+        if (isset($response["logged_in_user"])){
+            $this->settings->set('user_id',$response["logged_in_user"]["pk"])->save();
+            return new LoginResponse($response);
+        }
+        throw new \RuntimeException("Incorrect request code!");
+    }
+
+    /**
+     * @param $twoFactorIdentifier
+     * @param $verificationCode
+     * @return \IgApi\Model\LoginResponse
+     * @throws \IgApi\Exceptions\InstagramRequestException
+     */
+    public function finishTwoFactor($twoFactorIdentifier,$verificationCode) : LoginResponse
+    {
+        $verificationCode = preg_replace('/\s+/', '', $verificationCode);
+        $response = $this->request('accounts/two_factor_login/')
+            ->addPost('verification_method','1')
+            ->addPost('verification_code',$verificationCode)
+            ->addPost('two_factor_identifier',$twoFactorIdentifier)
+            ->addPost('_csrftoken',$this->settings->info->getToken())
+            ->addPost('username',$this->username)
+            ->addPost('device_id',$this->settings->info->getDeviceId())
+            ->addPost('guid',$this->settings->info->getUuid())
+            ->execute();
+
+        return new LoginResponse($response);
     }
 
 
