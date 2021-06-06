@@ -183,6 +183,17 @@ class Instagram
             ->getDecodedResponse(true);
     }
 
+    public function challengeLoginReview(){
+        return $this->request('challenge/')
+            ->addPost('choice',0)
+            ->addPost('_csrftoken',$this->settings->info->getToken())
+            ->addPost('guid', $this->settings->info->getUuid())
+            ->addPost('_uuid',$this->settings->info->getUuid())
+            ->addPost('device_id', $this->settings->info->getDeviceId())
+            ->execute()
+            ->getDecodedResponse(true);
+    }
+
     /**
      * @param $path
      * @param $securityCode
