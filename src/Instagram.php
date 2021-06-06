@@ -228,10 +228,9 @@ class Instagram
     }
 
     public function sendTwoFactorSMS($twoFactorIdentifier){
-        return $this->request('accounts/send_two_factor_login_sms/')
+       return $this->request('accounts/send_two_factor_login_sms/')
             ->addPost('two_factor_identifier',$twoFactorIdentifier)
             ->addPost('username',$this->username)
-            ->addPost('password',$this->password)
             ->addPost('device_id',$this->settings->info->getDeviceId())
             ->addPost('guid',$this->settings->info->getUuid())
             ->addPost('_csrftoken',$this->settings->info->getToken())
