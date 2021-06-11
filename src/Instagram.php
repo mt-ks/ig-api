@@ -5,6 +5,7 @@ namespace IgApi;
 use EJM\MainMapper;
 use IgApi\Exceptions\InstagramRequestException;
 use IgApi\Model\ChallengeDetailModel;
+use IgApi\Model\CheckTwoFactorNotification;
 use IgApi\Model\LoginResponse;
 use IgApi\Request\Account;
 use IgApi\Request\Story;
@@ -223,11 +224,11 @@ class Instagram
      * @return \IgApi\Model\LoginResponse
      * @throws \IgApi\Exceptions\InstagramRequestException
      */
-    public function finishTwoFactor($twoFactorIdentifier,$verificationCode) : LoginResponse
+    public function finishTwoFactor($twoFactorIdentifier,$verificationCode,$verificationMethod = 1) : LoginResponse
     {
         $verificationCode = preg_replace('/\s+/', '', $verificationCode);
         $response = $this->request('accounts/two_factor_login/')
-            ->addPost('verification_method','1')
+            ->addPost('verification_method',$verificationMethod)
             ->addPost('verification_code',$verificationCode)
             ->addPost('two_factor_identifier',$twoFactorIdentifier)
             ->addPost('_csrftoken',$this->settings->info->getToken())
@@ -241,6 +242,26 @@ class Instagram
         }
 
         return new LoginResponse($response);
+    }
+
+
+    /**
+     * @param $identifier
+     * @return \IgApi\Model\CheckTwoFactorNotification
+     * @throws \IgApi\Exceptions\InstagramRequestException
+     */
+    public function checkTrustedNotificationStatus($identifier): CheckTwoFactorNotification
+    {
+        $request = $this->request('two_factor/check_trusted_notification_status/')
+            ->addPost('_csrftoken',$this->settings->info->getToken())
+            ->addPost('two_factor_identifier',$identifier)
+            ->addPost('username',$this->username)
+            ->addPost('device_id',$this->settings->info->getDeviceId())
+            ->execute()
+            ->getDecodedResponse(true);
+
+        return new CheckTwoFactorNotification($request);
+
     }
 
     public function sendTwoFactorSMS($twoFactorIdentifier){
