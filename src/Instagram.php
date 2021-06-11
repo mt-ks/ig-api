@@ -238,7 +238,6 @@ class Instagram
 
         if (isset($response["logged_in_user"])){
             $this->settings->set('user_id',$response["logged_in_user"]["pk"])->save();
-            return new LoginResponse($response);
         }
 
         return new LoginResponse($response);
