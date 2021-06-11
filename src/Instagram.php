@@ -2,6 +2,7 @@
 
 
 namespace IgApi;
+use EJM\MainMapper;
 use IgApi\Exceptions\InstagramRequestException;
 use IgApi\Model\ChallengeDetailModel;
 use IgApi\Model\LoginResponse;
@@ -234,6 +235,11 @@ class Instagram
             ->addPost('device_id',$this->settings->info->getDeviceId())
             ->addPost('guid',$this->settings->info->getUuid())
             ->execute();
+
+        if (isset($response["logged_in_user"])){
+            $this->settings->set('user_id',$response["logged_in_user"]["pk"])->save();
+            return new LoginResponse($response);
+        }
 
         return new LoginResponse($response);
     }
