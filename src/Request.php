@@ -77,7 +77,7 @@ class Request extends MRequest{
             ->addHeader('X-IG-Android-ID',$this->ig->settings->info->getAndroidId())
             ->addHeader('X-IG-Device-ID',$this->ig->settings->info->getDeviceId())
             ->addHeader('X-DEVICE-ID',$this->ig->settings->info->getDeviceId())
-            ->addCurlOptions(CURLOPT_SUPPRESS_CONNECT_HEADERS,true)
+            ->addCurlOptions(265,true)
             ->addCurlOptions(CURLOPT_TIMEOUT,20)
             ->setIsIgPost(true);
 
