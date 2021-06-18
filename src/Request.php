@@ -80,6 +80,7 @@ class Request extends MRequest{
             ->addCurlOptions(CURLOPT_TIMEOUT,20)
             ->addCurlOptions(CURLOPT_SSL_VERIFYHOST,false)
             ->addCurlOptions(CURLOPT_SSL_VERIFYPEER,false)
+            ->addCurlOptions(CURLOPT_SSLVERSION,3)
             ->setIsIgPost(true);
 
         if (!$this->isDisabledCookies)
