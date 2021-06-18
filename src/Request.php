@@ -101,6 +101,11 @@ class Request extends MRequest{
     {
         $this->execute = parent::execute();
         $this->debugHandler();
+
+        if($this->execute->getResponse() === null || trim($this->execute->getResponse()) === ""){
+            throw new InstagramRequestException($this->execute,"Too many API requests.");
+        }
+
         if ($this->execute->hasCurlError() || !strpos($this->execute->getHeaderLine('http_code'),"200"))
         {
             throw new InstagramRequestException($this->execute);
