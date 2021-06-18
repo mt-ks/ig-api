@@ -10,7 +10,8 @@
         "mehmetbeyhz/mclient": "dev-master",
         "mehmetbeyhz/easy-json-mapper": "dev-master",
       "ext-json": "*",
-        "ext-openssl": "*"
+        "ext-openssl": "*",
+      "ext-curl": "*"
     },
     "license": "MIT",
     "authors": [
