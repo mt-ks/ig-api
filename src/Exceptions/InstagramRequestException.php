@@ -28,7 +28,7 @@ class InstagramRequestException extends \Exception
 
             if ($execute->hasCurlError())
             {
-                $message = $execute->getCurlError();
+                $message = $execute->getCurlErrorNo() . ' : ' . $execute->getCurlError();
             }
         }
 
