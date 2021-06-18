@@ -144,11 +144,6 @@ class Instagram
             ->addPost('login_attempt_count',0)
             ->execute();
 
-        print_r($request->getResponse());
-        exit;
-
-
-
         $loginResponse = new LoginResponse($request->getDecodedResponse(true));
         $this->settings->set('user_id',$loginResponse->getLoggedInUser()->getPk())->save();
         return $loginResponse;
