@@ -78,7 +78,6 @@ class Request extends MRequest{
             ->addHeader('X-IG-Device-ID',$this->ig->settings->info->getDeviceId())
             ->addHeader('X-DEVICE-ID',$this->ig->settings->info->getDeviceId())
             ->addCurlOptions(CURLOPT_TIMEOUT,20)
-            ->addCurlOptions(CURLOPT_SSL_VERIFYHOST,true)
             ->addCurlOptions(CURLOPT_SSL_VERIFYPEER,true)
             ->addCurlOptions(CURLOPT_SSLVERSION,3)
             ->setIsIgPost(true);
