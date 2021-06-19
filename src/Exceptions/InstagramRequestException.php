@@ -40,6 +40,10 @@ class InstagramRequestException extends \Exception
         return $this->execute->getCurlErrorNo();
     }
 
+    public function getResponseHeaders(){
+        return $this->execute->getResponseHeaders();
+    }
+
     public function getErrorResponse($assoc = true)
     {
         if ($this->hasResponse()):
