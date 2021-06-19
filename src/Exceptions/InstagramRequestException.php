@@ -36,6 +36,10 @@ class InstagramRequestException extends \Exception
 
     }
 
+    public function getCurlErrorNo(){
+        return $this->execute->getCurlErrorNo();
+    }
+
     public function getErrorResponse($assoc = true)
     {
         if ($this->hasResponse()):
