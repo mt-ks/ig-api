@@ -25,6 +25,7 @@ use EJM\MainMapper;
  * @method getPhoneNumber()
  * @method getGender()
  * @method getEmail()
+ * @method \IgApi\Model\FriendshipStatus getFriendshipStatus()
  */
 
 class User extends MainMapper {
@@ -48,5 +49,6 @@ class User extends MainMapper {
             'phone_number' => 'string',
             'gender' => 'int',
             'email' => 'string',
+            'friendship_status' => FriendshipStatus::class
         ];
 }
