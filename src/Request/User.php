@@ -8,6 +8,7 @@ use IgApi\Instagram;
 use IgApi\Model\FollowListResponse;
 use IgApi\Model\TopSearchResponse;
 use IgApi\Model\UserInfoResponse;
+use IgApi\Model\UsersSearchResponse;
 use IgApi\Utils\Encryption;
 
 class User
@@ -94,6 +95,22 @@ class User
             ->execute();
 
         return (new TopSearchResponse($request->getDecodedResponse()));
+    }
+
+    /**
+     * @param $query
+     * @return \IgApi\Model\UsersSearchResponse
+     * @throws \IgApi\Exceptions\InstagramRequestException
+     */
+    public function searchUser($query) : UsersSearchResponse{
+        $request = $this->ig->request('users/search/')
+            ->addParam('search_surface','user_search_page')
+            ->addParam('timezone_offset','0')
+            ->addParam('q',$query)
+            ->addParam('count',30)
+            ->execute();
+
+        return (new UsersSearchResponse($request->getDecodedResponse()));
     }
 
 }
