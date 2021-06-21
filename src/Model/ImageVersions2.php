@@ -7,6 +7,7 @@ namespace IgApi\Model;
 use EJM\MainMapper;
 /**
  * @method Candidates[] getCandidates()
+ * @method boolean hasCandidates()
  */
 
 class ImageVersions2 extends MainMapper {

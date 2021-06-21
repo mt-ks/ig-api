@@ -7,9 +7,13 @@ use EJM\MainMapper;
 
 /**
  * @method getWidth()
+ * @method boolean hasWidth()
  * @method getHeight()
+ * @method boolean hasHeight()
  * @method getUrl()
+ * @method boolean hasUrl()
  * @method getScansProfile()
+ * @method boolean hasScansProfile()
  */
 
 class Candidates extends MainMapper {
