@@ -78,7 +78,7 @@ use EJM\MainMapper;
  * @method getProfileGridControlEnabled()
  * @method getDeletedReason()
  * @method getIntegrityReviewDecision()
- * @method \IgApi\Model\CarouselMedia getCarouselMedia()
+ * @method \IgApi\Model\CarouselMedia[] getCarouselMedia()
  * @method boolean hasCarouselMedia()
  */
 class Item extends MainMapper
