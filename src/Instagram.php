@@ -287,7 +287,7 @@ class Instagram
             ->addParam('fetch_reason','token_expired')
             ->execute();
 
-        $this->saveCookie($request);
+        //$this->saveCookie($request);
 
         return $request->getResponse();
     }
