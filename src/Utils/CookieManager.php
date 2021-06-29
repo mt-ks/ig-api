@@ -12,6 +12,12 @@ class CookieManager
         $currentCookies = $this->stringToArray($currentCookies);
         foreach ($responseCookies as $cookieKey => $cookieValue)
         {
+            if ($cookieValue === null || $cookieValue === ''){
+                continue;
+            }
+            if ($cookieKey === 'sessionid' && strlen($cookieValue) < 5){
+                continue;
+            }
             $currentCookies[$cookieKey] = $cookieValue;
             if ($cookieKey === 'csrftoken')
             {
