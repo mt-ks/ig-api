@@ -6,6 +6,7 @@ namespace IgApi\Request;
 
 use IgApi\Instagram;
 use IgApi\Model\FollowListResponse;
+use IgApi\Model\RecentActivityResponse;
 use IgApi\Model\TopSearchResponse;
 use IgApi\Model\UserInfoResponse;
 use IgApi\Model\UsersSearchResponse;
@@ -111,6 +112,18 @@ class User
             ->execute();
 
         return (new UsersSearchResponse($request->getDecodedResponse()));
+    }
+
+    /**
+     * @return \IgApi\Model\RecentActivityResponse
+     * @throws \IgApi\Exceptions\InstagramRequestException
+     */
+    public function getRecentActivityInbox(): RecentActivityResponse
+    {
+        $request = $this->ig->request('news/inbox/')
+            ->execute();
+
+        return (new RecentActivityResponse($request->getDecodedResponse(true)));
     }
 
 }

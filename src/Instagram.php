@@ -8,6 +8,7 @@ use IgApi\Model\ChallengeDetailModel;
 use IgApi\Model\CheckTwoFactorNotification;
 use IgApi\Model\LoginResponse;
 use IgApi\Request\Account;
+use IgApi\Request\Direct;
 use IgApi\Request\Story;
 use IgApi\Request\Timeline;
 use IgApi\Request\User;
@@ -44,6 +45,11 @@ class Instagram
     public Account $account;
 
     /**
+     * @var \IgApi\Request\Direct
+     */
+    public Direct $direct;
+
+    /**
      * Instagram constructor.
      * @param $username
      * @param $password
@@ -57,6 +63,7 @@ class Instagram
         $this->user  = new User($this);
         $this->timeline = new Timeline($this);
         $this->account = new Account($this);
+        $this->direct = new Direct($this);
     }
 
     /**
