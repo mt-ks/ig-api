@@ -39,7 +39,7 @@ class Settings
      */
     public function set($key,$value) : self
     {
-        if (isset($this->userData[$key])){
+        if (array_key_exists($key,$this->userData)){
             $this->userData[$key] = $value;
         }
         $this->updateInfo();
