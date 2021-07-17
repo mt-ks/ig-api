@@ -39,7 +39,7 @@ class Settings
      */
     public function set($key,$value) : self
     {
-        if (array_key_exists($key,$this->userData)){
+        if (array_key_exists($key,$this->userData) || array_key_exists($key,self::extraStorageField())){
             $this->userData[$key] = $value;
         }
         $this->updateInfo();
@@ -109,6 +109,7 @@ class Settings
         return [
             'username' => $this->ig->username,
             'user_id'  => '',
+            'bearer_token' => '',
             'token'    => '',
             'cookie'   => '',
             'public_key' => '',
@@ -121,5 +122,9 @@ class Settings
             'last_login' => '',
             'android_id' =>  'android-' . substr($megaRandomHash, 16)
         ];
+    }
+
+    protected static function extraStorageField() : array{
+        return ['bearer_token' => ''];
     }
 }

@@ -83,6 +83,9 @@ class Request extends MRequest{
         if (!$this->isDisabledCookies)
         {
             $this->setCookieString($this->ig->settings->info->getCookie());
+            if ($this->ig->settings->info->hasBearerToken()){
+                $this->addHeader('Authorization',$this->ig->settings->info->getBearerToken());
+            }
         }
 
         if ($this->ig->proxy):
@@ -117,7 +120,12 @@ class Request extends MRequest{
             if ($cookieManager->token !== null):
                 $settings->set('token',$cookieManager->token);
             endif;
+
+            if ($this->execute->getHeaderLine("ig-set-authorization")){
+                $settings->set('bearer_token',$this->execute->getHeaderLine("ig-set-authorization"));
+            }
             $settings->save();
+
         }
 
         return $this->execute;

@@ -20,6 +20,8 @@ use EJM\MainMapper;
  * @method getUuid()
  * @method getLastLogin()
  * @method getAndroidId()
+ * @method getBearerToken()
+ * @method hasBearerToken()
  */
 
 class StorageModel extends MainMapper{
@@ -27,6 +29,7 @@ class StorageModel extends MainMapper{
         [
             'username' => 'string',
             'user_id' => 'string',
+            'bearer_token' => 'string',
             'token' => 'string',
             'cookie' => 'string',
             'public_key' => 'string',

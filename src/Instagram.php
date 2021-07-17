@@ -142,7 +142,6 @@ class Instagram
             ->addPost('country_codes','[{"country_code":"1","source":["default"]}]')
             ->addPost('phone_id',$this->settings->info->getPhoneId())
             ->addPost('enc_password',Encryption::generate_password_enc($this->password,$this->settings->info->getPublicKey(),$this->settings->info->getPublicKeyId()))
-            ->addPost('_csrftoken',$this->settings->info->getToken())
             ->addPost('username',$this->username)
             ->addPost('adid',$this->settings->info->getAdvertisingId())
             ->addPost('guid',$this->settings->info->getUuid())
