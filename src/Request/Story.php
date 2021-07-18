@@ -34,14 +34,14 @@ class Story
      * @return mixed
      * @throws \IgApi\Exceptions\InstagramRequestException
      */
-    public function getHighlightDetail($highlightId){
+    public function getHighlightDetail($highlightIds = []){
 
         $request = $this->ig->request('feed/reels_media/')
             ->addPost('exclude_media_ids','[]')
             ->addPost('source','reel_highlight_profile')
             ->addPost('_uid',$this->ig->settings->info->getUserId())
             ->addPost('_uuid',$this->ig->settings->info->getUuid())
-            ->addPost('user_ids',[$highlightId])
+            ->addPost('user_ids',$highlightIds)
             ->execute();
         return new HighlightDetailResponse($request->getDecodedResponse());
     }
