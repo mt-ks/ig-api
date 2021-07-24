@@ -35,6 +35,23 @@ class User
         return new UserInfoResponse($request);
     }
 
+
+    /**
+     * @param $username
+     * @param string $module
+     * @return \IgApi\Model\UserInfoResponse
+     * @throws \IgApi\Exceptions\InstagramRequestException
+     */
+    public function getInfoByName($username, $module = 'feed_timeline')
+    {
+        $request = $this->ig->request("users/{$username}/usernameinfo/")
+            ->addParam('from_module', $module)
+            ->execute()
+            ->getDecodedResponse();
+
+        return new UserInfoResponse($request);
+    }
+
     /**
      * @param $userId
      * @param null $maxId

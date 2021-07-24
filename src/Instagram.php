@@ -9,6 +9,7 @@ use IgApi\Model\CheckTwoFactorNotification;
 use IgApi\Model\LoginResponse;
 use IgApi\Request\Account;
 use IgApi\Request\Direct;
+use IgApi\Request\Media;
 use IgApi\Request\Story;
 use IgApi\Request\Timeline;
 use IgApi\Request\User;
@@ -50,6 +51,11 @@ class Instagram
     public Direct $direct;
 
     /**
+     * @var \IgApi\Request\Media
+     */
+    public Media $media;
+
+    /**
      * Instagram constructor.
      * @param $username
      * @param $password
@@ -64,6 +70,7 @@ class Instagram
         $this->timeline = new Timeline($this);
         $this->account = new Account($this);
         $this->direct = new Direct($this);
+        $this->media = new Media($this);
     }
 
     /**
