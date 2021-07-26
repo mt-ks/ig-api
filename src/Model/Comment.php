@@ -13,6 +13,8 @@ use EJM\MainMapper;
  * @method string getUserId()
  * @method string getText()
  * @method boolean hasText()
+ * @method \IgApi\Model\User getUser()
+ * @method boolean hasUser()
  */
 class Comment extends MainMapper
 {
