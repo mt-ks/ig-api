@@ -20,6 +20,18 @@ class User
         $this->ig = $ig;
     }
 
+    public function removeFollower($userId)
+    {
+        return $this->ig->request("friendships/remove_follower/{$userId}/")
+            ->addPost('_uuid', $this->ig->settings->info->getUuid())
+            ->addPost('_uid', $this->ig->settings->info->getUserId())
+            ->addPost('_csrftoken', $this->ig->settings->info->getToken())
+            ->addPost('user_id', $userId)
+            ->addPost('radio_type', 'wifi-none')
+            ->execute()
+            ->getDecodedResponse();
+    }
+
     /**
      * @param $userId
      * @return \IgApi\Model\UserInfoResponse
