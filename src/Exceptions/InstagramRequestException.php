@@ -58,7 +58,7 @@ class InstagramRequestException extends \Exception
             return false;
         }
         $data = $this->getErrorResponse();
-        return (($data["message"]) && $data["message"] === "challenge_required");
+        return (isset($data["message"]) && $data["message"] === "challenge_required");
     }
 
     public function getChallengeData() : ?ChallengeModel
