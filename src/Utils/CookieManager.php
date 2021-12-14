@@ -36,8 +36,11 @@ class CookieManager
         return $cookie;
     }
 
-    public function stringToArray(string $cookie) : array
+    public function stringToArray($cookie) : array
     {
+        if ($cookie == null || $cookie == ""){
+            return [];
+        }
         $cookieArray = [];
         $parseLine = explode(";",$cookie);
 
