@@ -125,6 +125,6 @@ class Settings
     }
 
     protected static function extraStorageField() : array{
-        return ['bearer_token' => ''];
+        return ['bearer_token' => '','x_mid' => ''];
     }
 }
