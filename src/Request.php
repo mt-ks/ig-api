@@ -80,6 +80,10 @@ class Request extends MRequest{
             ->addCurlOptions(CURLOPT_TIMEOUT,20)
             ->setIsIgPost(true);
 
+        if ($this->ig->settings->info->getXMid()){
+            $this->addHeader('X-Mid',$this->ig->settings->info->getXMid());
+        }
+
         if (!$this->isDisabledCookies)
         {
             $this->setCookieString($this->ig->settings->info->getCookie());
@@ -124,6 +128,11 @@ class Request extends MRequest{
             if ($this->execute->getHeaderLine("ig-set-authorization")){
                 $settings->set('bearer_token',$this->execute->getHeaderLine("ig-set-authorization"));
             }
+
+            if ($this->execute->getHeaderLine("ig-set-x-mid")){
+                $settings->set('x_mid',$this->execute->getHeaderLine("ig-set-x-mid"));
+            }
+
             $settings->save();
 
         }
