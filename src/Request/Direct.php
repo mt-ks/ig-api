@@ -32,4 +32,15 @@ class Direct
         return (new DirectV2InboxResponse($request->execute()->getDecodedResponse(true)));
     }
 
+    public function getPresence($userID){
+        $request = $this->ig->request('direct_v2/fetch_and_subscribe_presence/')
+            ->setIsIgPost(false)
+            ->addPost('_uuid',$this->ig->settings->info->getUuid())
+            ->addPost('subscriptions_off','false')
+            ->addPost('request_data','['.$userID.']')
+            ->execute();
+
+        return $request->getResponse();
+    }
+
 }
