@@ -10,6 +10,7 @@ use IgApi\Model\LoginResponse;
 use IgApi\Request\Account;
 use IgApi\Request\Direct;
 use IgApi\Request\Media;
+use IgApi\Request\Registration;
 use IgApi\Request\Story;
 use IgApi\Request\Timeline;
 use IgApi\Request\User;
@@ -55,6 +56,8 @@ class Instagram
      */
     public Media $media;
 
+    public Registration $registration;
+
     /**
      * Instagram constructor.
      * @param $username
@@ -71,6 +74,7 @@ class Instagram
         $this->account = new Account($this);
         $this->direct = new Direct($this);
         $this->media = new Media($this);
+        $this->registration = new Registration($this);
     }
 
     /**
@@ -167,11 +171,13 @@ class Instagram
      * @return mixed
      * @throws \IgApi\Exceptions\InstagramRequestException
      */
-    public function getChallengeDetail($challengePath)
+    public function getChallengeDetail($challengePath,$challengeContext)
     {
         $response = $this->request($challengePath)
-            ->addParam('gui',$this->settings->info->getUuid())
-            ->addParam('device_id',$this->settings->info->getDeviceId())
+            ->setDisableCookies(true)
+            ->addParam('guid',$this->settings->info->getDeviceId())
+            ->addParam('device_id',$this->settings->info->getAndroidId())
+            ->addParam('challenge_context',$challengeContext)
             ->execute()
             ->getDecodedResponse();
 
@@ -300,7 +306,6 @@ class Instagram
             ->addParam('custom_device_id',$this->settings->info->getDeviceId())
             ->addParam('fetch_reason','token_expired')
             ->execute();
-
         //$this->saveCookie($request);
 
         return $request->getResponse();
