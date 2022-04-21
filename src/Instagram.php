@@ -74,7 +74,7 @@ class Instagram
         $this->account = new Account($this);
         $this->direct = new Direct($this);
         $this->media = new Media($this);
-        $this->registration = new Registration($this);
+        //$this->registration = new Registration($this);
     }
 
     /**
