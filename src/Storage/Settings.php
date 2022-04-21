@@ -58,7 +58,14 @@ class Settings
     }
 
 
-
+    protected static function checkUserAgentVersion($currentUserAgent){
+        $currentVersion = \IgApi\Constants::IG_VERSION;
+        preg_match("@Instagram (.*?) Android@si",$currentUserAgent,$fetchUserVersion);
+        if ($fetchUserVersion[1] != $currentVersion){
+            $currentUserAgent = str_replace($fetchUserVersion[1],$currentVersion,$currentUserAgent);
+        }
+        return $currentUserAgent;
+    }
 
     protected function checkUserStorage() : void
     {
@@ -66,7 +73,13 @@ class Settings
         {
             $this->saveFile($this->storageModel());
         }
+
         $this->userData   = json_decode(file_get_contents($this->sessionFile), true, 512, JSON_THROW_ON_ERROR);
+        $checkUserAgent   = self::checkUserAgentVersion($this->userData['useragent']);
+        if ($checkUserAgent != $this->userData['useragent']){
+            $this->set('useragent',$checkUserAgent)->save();
+        }
+
         $this->updateInfo();
     }
 
