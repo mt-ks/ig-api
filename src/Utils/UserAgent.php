@@ -90,7 +90,7 @@ class UserAgent
 
     public static function androidVersion(): string
     {
-        $versions = ['6.0', '7.0', '7.1', '8.0', '8.1', '9'];
+        $versions = ['9','10','11','12'];
         return $versions[array_rand($versions)];
     }
 
@@ -134,8 +134,14 @@ class UserAgent
                 return 27;
             case '9':
                 return 28;
+            case '10':
+                return 29;
+            case '11':
+                return 30;
+            case '12':
+                return 31;
         }
-        return 28;
+        return 30;
     }
 
     public static function randomPhoneName(): array
