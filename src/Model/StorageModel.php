@@ -23,6 +23,7 @@ use EJM\MainMapper;
  * @method getBearerToken()
  * @method hasBearerToken()
  * @method getXMid()
+ * @method getWwwClaim()
  */
 
 class StorageModel extends MainMapper{
@@ -43,5 +44,6 @@ class StorageModel extends MainMapper{
             'uuid' => 'string',
             'last_login' => 'string',
             'android_id' => 'string',
+            'www_claim' => 'string'
         ];
 }
