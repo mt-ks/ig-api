@@ -39,7 +39,7 @@ class UserAgent
         $buildDPI            = self::buildDPI();
         $deviceBRAND         = strtolower($randomPhone['phone_brand']);
         $deviceMDELNO        = $randomPhone['model_number'];
-        $buildLang           = 'en_US';
+        $buildLang           = 'tr_TR';
         $cpuHARDWARE         = self::cpuHardware();
 
 
