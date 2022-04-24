@@ -57,7 +57,7 @@ class UserAgent
             );
         }
 
-        return sprintf('Instagram %s Android (%s/%s; %s; %s; %s; %s; %s; %s; %s)',
+        return sprintf('Instagram %s Android (%s/%s; %s; %s; %s; %s; %s; %s; %s; %s)',
             $igVERSION,
             $androidAPILEVEL,
             $androidSDKINT,
@@ -65,6 +65,7 @@ class UserAgent
             $buildDPI['wh'],
             $deviceBRAND,
             $deviceMDELNO,
+            strtolower((string)preg_replace('@(.*?)-(.*?)@si',"\$2",$deviceMDELNO)?:$deviceMDELNO),
             $cpuHARDWARE,
             $buildLang,
             Constants::IG_BUILD_NUM
