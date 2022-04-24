@@ -16,6 +16,29 @@ class Media
         $this->ig = $ig;
     }
 
+
+    /**
+     * @param $mediaId
+     * @return void
+     * @throws \IgApi\Exceptions\InstagramRequestException
+     * @description : This method for only test actions.
+     */
+    public function like($mediaId){
+        $request = $this->ig->request("media/$mediaId/like/")
+            ->addPost('inventory_source','media_or_ad')
+            ->addPost('delivery_class','organic')
+            ->addPost('media_id',$mediaId)
+            ->addPost('radio_type','wifi-none')
+            ->addPost('_uid',$this->ig->settings->info->getUserId())
+            ->addPost('_uuid',$this->ig->settings->info->getUuid())
+            ->addPost('nav_chain','1oG:feed_timeline:1')
+            ->addPost('is_carousel_bumped_post','false')
+            ->addPost('container_module','feed_timeline')
+            ->addPost('feed_position','0')
+            ->execute()
+            ->getDecodedResponse();
+    }
+
     /**
      * @param $mediaId
      * @return \IgApi\Model\UserFeedResponse
