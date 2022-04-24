@@ -84,6 +84,12 @@ class Request extends MRequest{
             $this->addHeader('X-Mid',$this->ig->settings->info->getXMid());
         }
 
+        if ($this->ig->settings->info->getWwwClaim()){
+            $this->addHeader('X-Ig-Www-Claim',$this->ig->settings->info->getWwwClaim());
+        }else{
+            $this->addHeader('X-Ig-Www-Claim',0);
+        }
+
         if (!$this->isDisabledCookies)
         {
             $this->setCookieString($this->ig->settings->info->getCookie());
@@ -131,6 +137,10 @@ class Request extends MRequest{
 
             if ($this->execute->getHeaderLine("ig-set-x-mid")){
                 $settings->set('x_mid',$this->execute->getHeaderLine("ig-set-x-mid"));
+            }
+
+            if ($this->execute->getHeaderLine("x-ig-set-www-claim")){
+                $settings->set('www_claim',$this->execute->getHeaderLine("x-ig-set-www-claim"));
             }
 
             $settings->save();
