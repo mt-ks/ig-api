@@ -67,6 +67,10 @@ class Settings
         return $currentUserAgent;
     }
 
+    /**
+     * @return void
+     * @throws JsonException
+     */
     protected function checkUserStorage() : void
     {
         if (!file_exists($this->sessionFile))
