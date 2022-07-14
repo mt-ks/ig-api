@@ -16,6 +16,7 @@ use EJM\MainMapper;
  * @method string getId()
  * @method bool hasId()
  * @method \IgApi\Model\ImageVersions2 getImageVersions2()
+ * @method VideoVersions getVideoVersions()
  * @method boolean hasImageVersions2()
  * @method int getMediaType()
  * @method boolean hasMediaType()
@@ -31,6 +32,7 @@ class CarouselMedia extends MainMapper
         'carousel_parent_id' => 'string',
         'id' => 'string',
         'image_versions2' => ImageVersions2::class,
+        'video_versions' => VideoVersions::class,
         'media_type' => 'int',
         'original_height' => 'int',
         'original_width' => 'int'
