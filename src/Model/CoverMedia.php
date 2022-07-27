@@ -15,7 +15,7 @@ use EJM\MainMapper;
 class CoverMedia extends MainMapper {
     const MAP =
         [
-            'cropped_image_version' => 'CroppedImageVersion',
+            'cropped_image_version' => CroppedImageVersion::class,
             'media_id' => 'string',
             'full_image_version' => FullImageVersion::class
         ];
