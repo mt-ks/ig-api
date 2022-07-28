@@ -59,6 +59,8 @@ use EJM\MainMapper;
  * @method boolean hasImageVersions2()
  * @method VideoVersions[] getVideoVersions()
  * @method boolean hasVideoVersions()
+ * @method float getVideoDuration()
+ * @method boolean hasVideoDuration()
  * @method int getOriginalWidth()
  * @method boolean hasOriginalWidth()
  * @method int getOriginalHeight()
@@ -113,6 +115,7 @@ class Item extends MainMapper
             'inline_composer_imp_trigger_time' => 'string',
             'image_versions2' => ImageVersions2::class,
             'video_versions' => VideoVersions::class.'[]',
+            'video_duration' => 'int',
             'original_width' => 'string',
             'original_height' => 'string',
             'like_count' => 'string',
