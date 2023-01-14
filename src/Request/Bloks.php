@@ -99,18 +99,16 @@ class Bloks
             ->addPost('bloks_versioning_id',Constants::BLOKS_VERSION_ID)
             ->execute();
 
-        preg_match('/{\\\\\\\(.*?)"(.*?)}/m',$confirm->getResponse(),$matches);
+        preg_match('/{\\\\\\\(.*?)pk(.*?)}/m',$confirm->getResponse(),$matches);
         if (!isset($matches[0])){
-            throw new \RuntimeException("Üzgünüz, lütfen hesabınızı uygulama üzerinden kontrol edin.");
-        }
-        $decodeData = json_decode(str_replace('\\','',$matches[0]),true);
-        if (isset($decodeData["pk"])){
-            $this->ig->settings->set('user_id',$decodeData['pk'])->save();
-            return $decodeData;
+            $decodeData = json_decode(str_replace('\\','',$matches[0]),true);
+            if (isset($decodeData["pk"])){
+                $this->ig->settings->set('user_id',$decodeData['pk'])->save();
+                return $decodeData;
+            }
         }
 
-        return $decodeData;
-
+        return $matches;
     }
 
     private function bloksRequest(){
