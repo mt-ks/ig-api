@@ -4,6 +4,7 @@
 namespace IgApi\Request;
 
 
+use IgApi\Constants;
 use IgApi\Instagram;
 use IgApi\Model\HighlightDetailResponse;
 use IgApi\Model\HighlightsTray;
@@ -58,6 +59,20 @@ class Story
             ->execute()
             ->getDecodedResponse();
         return new StoryFeedResponse($request);
+    }
+
+    public function getReelsTray(){
+        $request = $this->ig->request("feed/reels_tray/")
+            ->setIsIgPost(false)
+            ->addPost('supported_capabilities_new',json_encode(Constants::SUPPORTED_CAPABILITIES_NEW))
+            ->addPost('reason','cold_start')
+            ->addPost('timezone_offset',10800)
+            ->addPost('tray_session_id','')
+            ->addPost('request_id','')
+            ->addPost('_uuid',$this->ig->settings->info->getUuid())
+            ->execute()
+            ->getResponse();
+        return $request;
     }
 
 }
