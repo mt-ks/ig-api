@@ -7,6 +7,7 @@ use IgApi\Exceptions\InstagramRequestException;
 use IgApi\Instagram;
 use IgApi\Model\Bloks\ConfirmChallengeModel;
 use IgApi\Model\Bloks\TakeChallengeModel;
+use IgApi\Model\CurrentUserResponse;
 
 class Bloks
 {
@@ -86,12 +87,14 @@ class Bloks
             ->getResponse();
     }
 
+
     /**
      * @param $securityCode
      * @param $challengeContext - Need encrypted user_id and cid challenge context data.
+     * @return CurrentUserResponse
      * @throws InstagramRequestException
      */
-    public function confirmChallengeCode($securityCode,$challengeContext): ConfirmChallengeModel
+    public function confirmChallengeCode($securityCode,$challengeContext): CurrentUserResponse
     {
         $confirm = $this->bloksRequest()
             ->addPost('should_promote_account_status',0)
@@ -100,19 +103,18 @@ class Bloks
             ->addPost('bk_client_context','{"bloks_version":"'.Constants::BLOKS_VERSION_ID.'","styles_id":"instagram"}')
             ->addPost('challenge_context',$challengeContext)
             ->addPost('bloks_versioning_id',Constants::BLOKS_VERSION_ID)
-            ->execute()
-            ->getResponse();
-        preg_match('/{\\\\\\\(.*?)pk(.*?)}/m',$confirm,$matches);
-        if (!isset($matches[0])){
-            throw new \RuntimeException("Üzgünüz kod onaylanırken bir sorun oluştu!");
-        }
-        $decodeData = json_decode(str_replace('\\','',$matches[0]),true);
-        if (!isset($decodeData['pk'])){
-            throw new \RuntimeException("Üzgünüz kod onaylanırken bir sorun oluştu!");
-        }
+            ->execute();
 
-        $this->ig->settings->set('user_id',$decodeData['pk'])->save();
-        return new ConfirmChallengeModel($decodeData);
+        $authenticated = false;
+        if ($confirm->getHeaderLine("ig-set-authorization")){
+            $authenticated = true;
+        }
+        if (!$authenticated){
+            throw new \RuntimeException("Lütfen size gönderilen onay koduna tekrar bakın ve deneyin.");
+        }
+        $currentUser = $this->ig->account->getCurrentUser();
+        $this->ig->settings->set('user_id',$currentUser->getUser()->getPk())->save();
+        return $currentUser;
     }
 
     private function bloksRequest(){
