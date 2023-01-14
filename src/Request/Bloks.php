@@ -90,13 +90,13 @@ class Bloks
 
     /**
      * @param $securityCode
-     * @param $challengeContext - Need encrypted user_id and cid challenge context data.
-     * @return CurrentUserResponse
+     * @param $challengeContext
+     * @return \MClient\HttpInterface
      * @throws InstagramRequestException
      */
-    public function confirmChallengeCode($securityCode,$challengeContext): CurrentUserResponse
+    public function confirmChallengeCode($securityCode,$challengeContext)
     {
-        $confirm = $this->bloksRequest()
+         return $this->bloksRequest()
             ->addPost('should_promote_account_status',0)
             ->addPost('security_code',$securityCode)
             ->addPost('is_bloks_web','False')
@@ -104,17 +104,6 @@ class Bloks
             ->addPost('challenge_context',$challengeContext)
             ->addPost('bloks_versioning_id',Constants::BLOKS_VERSION_ID)
             ->execute();
-
-        $authenticated = false;
-        if ($confirm->getHeaderLine("ig-set-authorization")){
-            $authenticated = true;
-        }
-        if (!$authenticated){
-            throw new \RuntimeException("Lütfen size gönderilen onay koduna tekrar bakın ve deneyin.");
-        }
-        $currentUser = $this->ig->account->getCurrentUser();
-        $this->ig->settings->set('user_id',$currentUser->getUser()->getPk())->save();
-        return $currentUser;
     }
 
     private function bloksRequest(){
