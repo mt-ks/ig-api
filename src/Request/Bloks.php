@@ -100,7 +100,7 @@ class Bloks
             ->execute();
 
         preg_match('/{\\\\\\\(.*?)pk(.*?)}/m',$confirm->getResponse(),$matches);
-        if (!isset($matches[0])){
+        if (isset($matches[0])){
             $decodeData = json_decode(str_replace('\\','',$matches[0]),true);
             if (isset($decodeData["pk"])){
                 $this->ig->settings->set('user_id',$decodeData['pk'])->save();
