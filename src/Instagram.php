@@ -8,6 +8,7 @@ use IgApi\Model\ChallengeDetailModel;
 use IgApi\Model\CheckTwoFactorNotification;
 use IgApi\Model\LoginResponse;
 use IgApi\Request\Account;
+use IgApi\Request\Bloks;
 use IgApi\Request\Direct;
 use IgApi\Request\Media;
 use IgApi\Request\Registration;
@@ -59,6 +60,11 @@ class Instagram
     public Registration $registration;
 
     /**
+     * @var Bloks
+     */
+    public Bloks $bloks;
+
+    /**
      * Instagram constructor.
      * @param $username
      * @param $password
@@ -74,6 +80,7 @@ class Instagram
         $this->account = new Account($this);
         $this->direct = new Direct($this);
         $this->media = new Media($this);
+        $this->bloks = new Bloks($this);
         //$this->registration = new Registration($this);
     }
 
