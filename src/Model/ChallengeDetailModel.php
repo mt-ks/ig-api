@@ -15,6 +15,9 @@ use EJM\MainMapper;
  * @method getUserId()
  * @method getChallengeContext()
  * @method getStatus()
+ * @method getFlowRenderType()
+ * @method getBloksAction()
+ *
  */
 class ChallengeDetailModel extends MainMapper
 {
@@ -24,6 +27,8 @@ class ChallengeDetailModel extends MainMapper
         'nonce_code' => 'string',
         'user_id' => 'string',
         'challenge_context' => 'string',
-        'status' => 'string'
+        'status' => 'string',
+        'flow_render_type' => 'int',
+        'bloks_action' => 'string',
     ];
 }
