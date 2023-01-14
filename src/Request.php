@@ -120,10 +120,6 @@ class Request extends MRequest{
             throw new InstagramRequestException($this->execute);
         }
 
-        if($this->execute->getResponse() === null || trim($this->execute->getResponse()) === ""){
-            throw new InstagramRequestException($this->execute,"Too many API requests.");
-        }
-
         if (!$this->isDisabledCookies){
             $cookieManager = new CookieManager();
             $settings = $this->ig->settings->set('cookie',$cookieManager->cookieMerge($this->ig->settings->info->getCookie(),$this->execute->getCookies()));
@@ -145,6 +141,11 @@ class Request extends MRequest{
 
             $settings->save();
 
+        }
+
+
+        if($this->execute->getResponse() === null || trim($this->execute->getResponse()) === ""){
+            throw new InstagramRequestException($this->execute,"Too many API requests.");
         }
 
         return $this->execute;
