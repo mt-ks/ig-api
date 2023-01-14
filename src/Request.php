@@ -143,8 +143,7 @@ class Request extends MRequest{
 
         }
 
-
-        if($this->execute->getResponse() === null || trim($this->execute->getResponse()) === ""){
+        if((strpos($this->getRequestUri(),"bloks") === false) && ($this->execute->getResponse() === null || trim($this->execute->getResponse()) === "")){
             throw new InstagramRequestException($this->execute,"Too many API requests.");
         }
 

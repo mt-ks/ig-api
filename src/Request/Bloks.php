@@ -88,15 +88,9 @@ class Bloks
     }
 
 
-    /**
-     * @param $securityCode
-     * @param $challengeContext
-     * @return \MClient\HttpInterface
-     * @throws InstagramRequestException
-     */
     public function confirmChallengeCode($securityCode,$challengeContext)
     {
-         return $this->bloksRequest()
+         $confirm = $this->bloksRequest()
             ->addPost('should_promote_account_status',0)
             ->addPost('security_code',$securityCode)
             ->addPost('is_bloks_web','False')
@@ -104,6 +98,19 @@ class Bloks
             ->addPost('challenge_context',$challengeContext)
             ->addPost('bloks_versioning_id',Constants::BLOKS_VERSION_ID)
             ->execute();
+
+        preg_match('/{\\\\\\\(.*?)"(.*?)}/m',$confirm->getResponse(),$matches);
+        if (!isset($matches[0])){
+            throw new \RuntimeException("Üzgünüz, lütfen hesabınızı uygulama üzerinden kontrol edin.");
+        }
+        $decodeData = json_decode(str_replace('\\','',$matches[0]),true);
+        if (isset($decodeData["pk"])){
+            $this->ig->settings->set('user_id',$decodeData['pk'])->save();
+            return $decodeData;
+        }
+
+        return $decodeData;
+
     }
 
     private function bloksRequest(){
