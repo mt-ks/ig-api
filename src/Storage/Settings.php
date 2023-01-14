@@ -61,7 +61,7 @@ class Settings
     protected static function checkUserAgentVersion($currentUserAgent){
         $currentVersion = \IgApi\Constants::IG_VERSION;
         preg_match("@Instagram (.*?) Android@si",$currentUserAgent,$fetchUserVersion);
-        if ($fetchUserVersion[1] != $currentVersion){
+        if (isset($fetchUserVersion[1]) && $fetchUserVersion[1] != $currentVersion){
             $currentUserAgent = str_replace($fetchUserVersion[1],$currentVersion,$currentUserAgent);
         }
         return $currentUserAgent;
